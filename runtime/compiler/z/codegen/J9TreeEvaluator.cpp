@@ -4210,7 +4210,8 @@ genInstanceOfOrCheckCastNullTest(TR::Node* node, TR::CodeGenerator* cg, TR::Regi
    {
    if (node->getOpCodeValue() == TR::checkcastAndNULLCHK)
       {
-      if (cg->getHasResumableTrapHandler())
+         static bool Disable_Traps = feGetEnv("Disable_Traps") != NULL;
+      if (!Disable_Traps && cg->getHasResumableTrapHandler())
          {
          TR::Instruction* compareAndTrapInstruction = generateRIEInstruction(cg, TR::InstOpCode::getCmpImmTrapOpCode(), node, objectReg, 0, TR::InstOpCode::COND_BE);
          compareAndTrapInstruction->setExceptBranchOp();
@@ -4219,19 +4220,18 @@ genInstanceOfOrCheckCastNullTest(TR::Node* node, TR::CodeGenerator* cg, TR::Regi
       else
          {
          generateRRInstruction(cg, TR::InstOpCode::getLoadTestRegOpCode(), node, objectReg, objectReg);
-
+         
          TR::Compilation* comp = cg->comp();
          TR::LabelSymbol* snippetLabel = generateLabelSymbol(cg);
          TR::Node* nullChkInfo = comp->findNullChkInfo(node);
-
+        
          TR::Instruction* branchInstruction = generateS390BranchInstruction(cg, TR::InstOpCode::BRC, TR::InstOpCode::COND_BE, nullChkInfo, snippetLabel);
          branchInstruction->setExceptBranchOp();
          branchInstruction->setNeedsGCMap(0x0000FFFF);
-
+         
          TR::SymbolReference* symRef = comp->getSymRefTab()->findOrCreateNullCheckSymbolRef(comp->getMethodSymbol());
          cg->addSnippet(new (cg->trHeapMemory()) TR::S390HelperCallSnippet(cg, nullChkInfo, snippetLabel, symRef));
          }
-
       return false;
       }
    else
