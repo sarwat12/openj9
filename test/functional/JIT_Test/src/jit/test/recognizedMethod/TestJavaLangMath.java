@@ -55,4 +55,52 @@ public class TestJavaLangMath {
         AssertJUnit.assertEquals(Double.POSITIVE_INFINITY, Math.sqrt(Double.POSITIVE_INFINITY));
         AssertJUnit.assertTrue(Double.isNaN(Math.sqrt(Double.NaN)));
     }
+
+    /**
+    * Tests the constant corner cases defined by the {@link Math.max} method, for float and double data types.
+    */
+    @Test(groups = {"level.sanity"}, invocationCount=2)
+    public void test_java_lang_Math_max() {
+        // Test Math.max for double type
+        AssertJUnit.assertTrue(Double.isNaN(Math.max(Double.NaN, Double.NaN)));
+        AssertJUnit.assertTrue(Double.isNaN(Math.max(Double.NaN, 0.0)));
+        AssertJUnit.assertTrue(Double.isNaN(Math.max(0.0, Double.NaN)));
+        AssertJUnit.assertTrue(Double.isNaN(Math.max(Double.NaN, -0.0)));
+        AssertJUnit.assertTrue(Double.isNaN(Math.max(-0.0, Double.NaN)));
+        AssertJUnit.assertEquals(0.0, Math.max(0.0, -0.0), 0.0);
+        AssertJUnit.assertEquals(0.0, Math.max(-0.0, 0.0), 0.0);
+
+         // Test Math.max for float type
+         AssertJUnit.assertTrue(Float.isNaN(Math.max(Float.NaN, Float.NaN)));
+         AssertJUnit.assertTrue(Float.isNaN(Math.max(Float.NaN, 0.0f)));
+         AssertJUnit.assertTrue(Float.isNaN(Math.max(0.0f, Float.NaN)));
+         AssertJUnit.assertTrue(Float.isNaN(Math.max(Float.NaN, -0.0f)));
+         AssertJUnit.assertTrue(Float.isNaN(Math.max(-0.0f, Float.NaN)));
+         AssertJUnit.assertEquals(0.0f, Math.max(0.0f, -0.0f), 0.0f);
+         AssertJUnit.assertEquals(0.0f, Math.max(-0.0f, 0.0f), 0.0f);
+    }
+
+    /**
+    * Tests the constant corner cases defined by the {@link Math.min} method, for float and double data types.
+    */
+    @Test(groups = {"level.sanity"}, invocationCount=2)
+    public void test_java_lang_Math_min() {
+        // Test Math.min for double type
+        AssertJUnit.assertTrue(Double.isNaN(Math.min(Double.NaN, Double.NaN)));
+        AssertJUnit.assertTrue(Double.isNaN(Math.min(Double.NaN, 0.0)));
+        AssertJUnit.assertTrue(Double.isNaN(Math.min(0.0, Double.NaN)));
+        AssertJUnit.assertTrue(Double.isNaN(Math.min(Double.NaN, -0.0)));
+        AssertJUnit.assertTrue(Double.isNaN(Math.min(-0.0, Double.NaN)));
+        AssertJUnit.assertEquals(-0.0, Math.min(0.0, -0.0), 0.0);
+        AssertJUnit.assertEquals(-0.0, Math.min(-0.0, 0.0), 0.0);
+
+        // Test Math.min for float type
+        AssertJUnit.assertTrue(Float.isNaN(Math.min(Float.NaN, Float.NaN)));
+        AssertJUnit.assertTrue(Float.isNaN(Math.min(Float.NaN, 0.0f)));
+        AssertJUnit.assertTrue(Float.isNaN(Math.min(0.0f, Float.NaN)));
+        AssertJUnit.assertTrue(Float.isNaN(Math.min(Float.NaN, -0.0f)));
+        AssertJUnit.assertTrue(Float.isNaN(Math.min(-0.0f, Float.NaN)));
+        AssertJUnit.assertEquals(-0.0f, Math.min(0.0f, -0.0f), 0.0f);
+        AssertJUnit.assertEquals(-0.0f, Math.min(-0.0f, 0.0f), 0.0f);
+    }
 }
